@@ -8,7 +8,7 @@ int main(const int argc, const char *argv[])
         auto args = convert_args(argc, argv);
         auto culled = cull(args);
         output(culled, std::cout);
-    } catch(const std::runtime_error &e) {
+    } catch (const std::runtime_error &e) {
         std::cerr << e.what();
     }
 }
