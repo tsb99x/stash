@@ -54,7 +54,7 @@ std::vector<int> cull(const std::vector<int> &args)
 bool contains(const std::unordered_set<int> &container, const int element)
 {
     return container.find(element) != container.end();
-};
+}
 
 void output(const std::vector<int> &vec, std::ostream &stream)
 {
