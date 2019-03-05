@@ -10,7 +10,7 @@ int main(const int argc, const char *argv[])
         auto args = convert_args(argc, argv);
         auto culled = cull(args);
         output(culled, cout);
-    } catch (const runtime_error &e) {
+    } catch (const exception &e) {
         cerr << e.what();
     }
 }

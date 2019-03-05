@@ -11,7 +11,7 @@ int main()
         auto inputs = get_inputs();
         auto pairs = pair_match(words, inputs);
         output(pairs, cout);
-    } catch (const runtime_error &e) {
+    } catch (const exception &e) {
         cerr << e.what();
     }
 }
