@@ -10,8 +10,9 @@ int main()
 {
     printf("SRC> ");
     char input_buf[BUF_SIZE];
-    if (!gets_s(input_buf, sizeof(input_buf)))
+    if (!fgets(input_buf, sizeof(input_buf), stdin))
         panic_m("Failed to acquire input");
+    input_buf[strcspn(input_buf, "\n")] = 0;
 
     char dst_strand[BUF_SIZE];
     complement(input_buf, dst_strand);

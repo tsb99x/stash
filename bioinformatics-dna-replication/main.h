@@ -3,6 +3,8 @@
 
 #include <string.h>
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #ifdef _WIN32
 #define __FILENAME__                                                           \
     (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)

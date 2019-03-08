@@ -30,10 +30,9 @@ char lookup_base_compl(const char base)
         return 'G';
     case ' ':
         return ' ';
-    default:
+    default:;
         char res_msg[255];
-        sprintf_s(res_msg, 255, "%s '%c'", "Failed to complement base of",
-                  base);
+        sprintf(res_msg, "%s '%c'", "Failed to complement base of", base);
         panic_m(res_msg);
     }
 }
