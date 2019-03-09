@@ -1,20 +1,44 @@
 #include "main.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "panic.h"
 
 #define BUF_SIZE 255
 
-int main()
+enum mode_t { compl, ident };
+
+enum mode_t parse_mode(const char *const arg)
 {
+    if (!strcmp(arg, "-c")) {
+        return compl;
+    } else if (!strcmp(arg, "-i")) {
+        return ident;
+    } else {
+        char buf[255];
+        sprintf(buf, "Failed to parse mode of '%s'", arg);
+        panic_m(buf);
+    }
+}
+
+int main(int argc, char **argv)
+{
+    if (argc < 2)
+        panic_m("Failed to obtain mode arg, use:\n"
+                "\t'-c' to complement\n"
+                "\t'-i' to identify");
+
+    enum mode_t mode = parse_mode(argv[1]);
+
     printf("SRC> ");
     char input_buf[BUF_SIZE];
-    if (!fgets(input_buf, sizeof(input_buf), stdin))
+    if (!fgets(input_buf, sizeof input_buf, stdin))
         panic_m("Failed to acquire input");
     input_buf[strcspn(input_buf, "\n")] = 0;
 
-    char dst_strand[BUF_SIZE];
-    complement(input_buf, dst_strand);
-    printf("DST> %s", dst_strand);
+    char dst_buf[BUF_SIZE];
+    if (mode == compl) {
+        complement(input_buf, dst_buf);
+    } else {
+        identify(input_buf, dst_buf);
+    }
+    printf("RES> %s", dst_buf);
 }
