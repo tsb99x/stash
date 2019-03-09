@@ -13,9 +13,7 @@ enum mode_t parse_mode(const char *const arg)
     } else if (!strcmp(arg, "-i")) {
         return ident;
     } else {
-        char buf[255];
-        sprintf(buf, "Failed to parse mode of '%s'", arg);
-        panic_m(buf);
+        panic_m("Failed to parse mode of '%s'", arg);
     }
 }
 

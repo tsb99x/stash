@@ -8,9 +8,11 @@
 #define __FILENAME__                                                           \
     (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
 
-#define panic_m(S)                                                             \
+#define panic_m(...)                                                           \
     do {                                                                       \
-        fprintf(stderr, "[E]: %s @ %s:%d", S, __FILENAME__, __LINE__);         \
+        fprintf(stderr, "[E]: ");                                              \
+        fprintf(stderr, __VA_ARGS__);                                          \
+        fprintf(stderr, " @ %s:%d", __FILENAME__, __LINE__);                   \
         exit(EXIT_FAILURE);                                                    \
     } while (0)
 

@@ -29,10 +29,8 @@ char lookup_base_compl(const char base)
         return 'G';
     case ' ':
         return ' ';
-    default:;
-        char res_msg[255];
-        sprintf(res_msg, "%s '%c'", "Failed to complement base of", base);
-        panic_m(res_msg);
+    default:
+        panic_m("Failed to complement base of '%c'", base);
     }
 }
 
@@ -116,9 +114,7 @@ void convert_to_codon(const char *const bases, char **dst_buf)
         }
     }
 
-    char buf[255];
-    sprintf(buf, "Failed to find codon for bases of '%s'", bases);
-    panic_m(buf);
+    panic_m("Failed to find codon for bases of '%s'", bases);
 }
 
 void identify(const char *src_strand, char *dst_buf)
@@ -141,7 +137,8 @@ void identify(const char *src_strand, char *dst_buf)
     }
 
     if (bases_index != 0) {
-        printf("%d of bases at the end of strand does not form codon\n", bases_index);
+        printf("%d of bases at the end of strand does not form codon\n",
+               bases_index);
     }
 
     *dst_buf = '\0';
