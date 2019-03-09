@@ -13,5 +13,5 @@ RUN mkdir build \
 FROM debian
 
 WORKDIR /usr/local/app
-COPY --from=builder /usr/src/app/build/hello_docker .
-ENTRYPOINT [ "./hello_docker" ]
+COPY --from=builder /usr/src/app/build/main .
+ENTRYPOINT [ "./main" ]
