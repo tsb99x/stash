@@ -8,8 +8,10 @@ else()
     add_compile_options(-Wall -Wextra -pedantic -Werror)
 endif()
 
+include_directories(../lib)
+
 set(CMAKE_C_STANDARD 11)
-set(BASE_SOURCES dna.c)
+set(BASE_SOURCES main.h dna.c)
 
 add_executable(main main.c ${BASE_SOURCES})
 

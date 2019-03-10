@@ -1,5 +1,5 @@
-#ifndef PANIC_H
-#define PANIC_H
+#ifndef LIB_PANIC_H
+#define LIB_PANIC_H
 
 #include <stdio.h>
 #include <stdlib.h>
