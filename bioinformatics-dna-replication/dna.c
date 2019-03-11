@@ -98,9 +98,11 @@ struct lookup_item_t codon_lookup[] = {
 
 // Much better way would be to process simple list, that is.
 
+#define count_m(X) sizeof X / sizeof X[0]
+
 void convert_to_codon(const char *const bases, char **dst_buf)
 {
-    for (size_t i = 0; i < sizeof codon_lookup / sizeof codon_lookup[0]; i++) {
+    for (size_t i = 0; i < count_m(codon_lookup); i++) {
         if (!strncmp(bases, codon_lookup[i].bases, 3)) {
             size_t codon_len = strlen(codon_lookup[i].codon);
 

@@ -4,9 +4,9 @@
 
 #define BUF_SIZE 255
 
-enum mode_t { compl, ident };
+enum mode { compl, ident };
 
-enum mode_t parse_mode(const char *const arg)
+enum mode parse_mode(const char *const arg)
 {
     if (!strcmp(arg, "-c")) {
         return compl;
@@ -24,7 +24,7 @@ int main(int argc, char **argv)
                 "\t'-c' to complement\n"
                 "\t'-i' to identify");
 
-    enum mode_t mode = parse_mode(argv[1]);
+    enum mode mode = parse_mode(argv[1]);
 
     printf("SRC> ");
     char input_buf[BUF_SIZE];
