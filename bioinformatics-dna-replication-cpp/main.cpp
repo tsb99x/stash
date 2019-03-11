@@ -6,48 +6,61 @@ using namespace std;
 
 enum mode { complement, identify };
 
-mode parse_mode(const int argc, char *argv[])
+vector<string> args(const int argc, const char *const *const argv)
 {
-    if (argc != 2)
+    vector<string> res;
+
+    for (int i = 0; i < argc; i++)
+        res.emplace_back(argv[i]);
+
+    return res;
+}
+
+mode parse_mode(const vector<string> &args)
+{
+    if (args.size() != 2)
         throw runtime_error("Failed to obtain mode arg, use:\n"
                             "\t'-c' to complement\n"
                             "\t'-i' to identify");
 
-    if (!strcmp(argv[1], "-c")) {
+    if (args[1] == "-c")
         return complement;
-    } else if (!strcmp(argv[1], "-i")) {
+    if (args[1] == "-i")
         return identify;
-    }
 
-    throw runtime_error("Failed to parse mode of '"s + argv[1] + "'");
+    throw runtime_error("Failed to parse mode of '"s + args[1] + "'");
 }
 
 string read_input()
 {
     string res;
-    cout << "SRC>";
+
+    cout << "SRC > ";
     getline(cin, res);
+
     return res;
 }
 
-void validate_input(const string &src)
+string validate(const string &src)
 {
-    size_t not_valid = src.find_first_not_of("ACGT ");
+    size_t not_valid_idx = src.find_first_not_of("ACGT ");
 
-    if (not_valid != string::npos) {
+    if (not_valid_idx != string::npos)
         throw runtime_error(
             "Input must consist of 'A', 'C', 'G', 'T' and spaces, but found '"s +
-            src[not_valid] + "'");
-    }
+            src[not_valid_idx] + "'");
+
+    return src;
 }
 
 vector<char> convert_input(const string &src)
 {
     vector<char> res;
-    for (auto &ch : src) {
+
+    for (auto &ch : src)
         if (ch != ' ')
             res.push_back(ch);
-    }
+
     return res;
 }
 
@@ -78,7 +91,7 @@ vector<char> do_complement(const vector<char> &bases)
 
 void output(ostream &os, const vector<char> &res)
 {
-    os << "RES>";
+    os << "RES > ";
     if (res.size() > 0)
         os << res[0];
     for (size_t i = 1; i < res.size(); i++)
@@ -89,9 +102,8 @@ int main(int argc, char *argv[])
 {
     try {
 
-        mode m = parse_mode(argc, argv);
-        string src = read_input();
-        validate_input(src);
+        mode m = parse_mode(args(argc, argv));
+        string src = validate(read_input());
         vector<char> bases = convert_input(src);
 
         vector<char> res;
