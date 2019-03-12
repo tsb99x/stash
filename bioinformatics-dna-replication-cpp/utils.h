@@ -6,6 +6,7 @@
 
 std::vector<std::string> args(const int argc, const char *const *const argv);
 
-std::string join(const std::vector<char> &vec, const std::string &sep);
+template <typename T>
+std::string join(const std::vector<T> &vec, const std::string &sep);
 
 #endif

@@ -14,7 +14,8 @@ vector<string> args(const int argc, const char *const *const argv)
     return res;
 }
 
-string join(const vector<char> &vec, const string &sep)
+template <typename T>
+string join(const vector<T> &vec, const string &sep)
 {
     ostringstream os;
 
@@ -25,3 +26,6 @@ string join(const vector<char> &vec, const string &sep)
 
     return os.str();
 }
+
+template string join(const vector<char> &vec, const string &sep);
+template string join(const vector<string> &vec, const string &sep);
