@@ -5,3 +5,4 @@ BraceWrapping: {
     AfterFunction: 'true'
 }
 SortIncludes: true
+AlwaysBreakTemplateDeclarations: true

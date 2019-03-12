@@ -7,8 +7,8 @@ else()
     add_compile_options(-Wall -Wextra -pedantic -Werror)
 endif()
 
-set(CMAKE_CXX_STANDARD 14)
-set(BASE_SOURCES main.cpp)
+set(CMAKE_CXX_STANDARD 17)
+set(BASE_SOURCES main.cpp utils.cpp utils.h)
 
 add_executable(dna-replication ${BASE_SOURCES})
 

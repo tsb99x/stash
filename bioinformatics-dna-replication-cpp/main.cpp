@@ -1,20 +1,10 @@
-#include <cstring>
+#include "utils.h"
+
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
 enum mode { complement, identify };
-
-vector<string> args(const int argc, const char *const *const argv)
-{
-    vector<string> res;
-
-    for (int i = 0; i < argc; i++)
-        res.emplace_back(argv[i]);
-
-    return res;
-}
 
 mode parse_mode(const vector<string> &args)
 {
@@ -83,25 +73,16 @@ char lookup_base_complement(const char base)
 vector<char> do_complement(const vector<char> &bases)
 {
     vector<char> res;
-    for (auto &base : bases) {
-        res.push_back(lookup_base_complement(base));
-    }
-    return res;
-}
 
-void output(ostream &os, const vector<char> &res)
-{
-    os << "RES > ";
-    if (res.size() > 0)
-        os << res[0];
-    for (size_t i = 1; i < res.size(); i++)
-        os << " " << res[i];
+    for (auto &base : bases)
+        res.push_back(lookup_base_complement(base));
+
+    return res;
 }
 
 int main(int argc, char *argv[])
 {
     try {
-
         mode m = parse_mode(args(argc, argv));
         string src = validate(read_input());
         vector<char> bases = convert_input(src);
@@ -112,7 +93,7 @@ int main(int argc, char *argv[])
         else
             throw runtime_error("Identification is not implemented yet...");
 
-        output(cout, res);
+        cout << "RES > " << join(res, " ");
 
     } catch (const exception &e) {
         cerr << e.what() << endl;
