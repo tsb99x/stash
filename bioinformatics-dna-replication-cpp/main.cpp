@@ -156,6 +156,7 @@ vector<string> do_convert(const vector<char> &bases)
 int main(int argc, char *argv[])
 {
     try {
+
         mode m = parse_mode(args(argc, argv));
         string src = validate(read_input());
         vector<char> bases = convert_input(src);

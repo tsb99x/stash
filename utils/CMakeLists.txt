@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
-project(dna-replication VERSION 0.1.0)
+project(utils VERSION 0.1.0)
 
 if(MSVC)
     add_compile_options(/W4 /WX)
@@ -8,7 +8,7 @@ else()
 endif()
 
 set(CMAKE_CXX_STANDARD 17)
+set(BASE_SOURCES utils.cpp utils.h)
 
-add_executable(dna-replication main.cpp)
-add_subdirectory(../utils utils)
-target_link_libraries(dna-replication utils)
+add_library(utils ${BASE_SOURCES})
+target_include_directories(utils PUBLIC .)

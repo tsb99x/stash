@@ -3,4 +3,6 @@ project(culling_numbers)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(culling_numbers main.cpp main.h)
+add_executable(culling_numbers main.cpp)
+add_subdirectory(../utils utils)
+target_link_libraries(culling_numbers utils)

@@ -3,7 +3,7 @@ ColumnLimit: 80
 
 BreakBeforeBraces: Custom
 BraceWrapping:
-    AfterFunction: 'true'
+    AfterFunction: true
 
 SortIncludes: true
 AlwaysBreakTemplateDeclarations: true

@@ -1,41 +1,32 @@
-#include "main.h"
+#include "utils.h"
 
+#include <iostream>
 #include <string>
+#include <unordered_set>
 
 using namespace std;
 
-int main(const int argc, const char *argv[])
+vector<int> process_args(const vector<string> &args)
 {
-    try {
-        auto args = convert_args(argc, argv);
-        auto culled = cull(args);
-        output(culled, cout);
-    } catch (const exception &e) {
-        cerr << e.what();
-    }
-}
+    vector<int> res;
 
-vector<int> convert_args(const int argc, const char *argv[])
-{
-    if (argc < 2) {
+    if (args.size() < 2)
         throw runtime_error("Failed to get arguments");
-    }
 
-    vector<int> vec;
-
-    for (int i = 1; i < argc; i++) {
+    for (int i = 1; i < args.size(); i++) {
         int arg;
 
         try {
-            arg = stoi(argv[i]);
+            arg = stoi(args[i]);
         } catch (const invalid_argument &ia) {
-            throw runtime_error("Failed to process invalid argument of '"s + argv[i] + "'");
+            throw runtime_error("Failed to process invalid argument of '"s +
+                                args[i] + "'");
         }
 
-        vec.push_back(arg);
+        res.push_back(arg);
     }
 
-    return vec;
+    return res;
 }
 
 vector<int> cull(const vector<int> &args)
@@ -53,14 +44,15 @@ vector<int> cull(const vector<int> &args)
     return res;
 }
 
-void output(const vector<int> &vec, ostream &stream)
+int main(const int argc, const char *argv[])
 {
-    if (vec.empty()) {
-        return;
-    }
+    try {
 
-    stream << vec[0];
-    for (int i = 1; i < vec.size(); i++) {
-        stream << " " << vec[i];
+        auto nums = process_args(args(argc, argv));
+        auto culled = cull(nums);
+        cout << join(culled, " ");
+
+    } catch (const exception &e) {
+        cerr << e.what();
     }
 }
