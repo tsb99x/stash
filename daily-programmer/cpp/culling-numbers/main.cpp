@@ -1,7 +1,6 @@
-#include "utils.h"
+#include "utils.hpp"
 
 #include <iostream>
-#include <string>
 #include <unordered_set>
 
 using namespace std;
@@ -44,7 +43,8 @@ vector<int> cull(const vector<int> &args)
     return res;
 }
 
-int main(const int argc, const char *argv[])
+int main(const int argc,
+         const char *argv[])
 {
     try {
 

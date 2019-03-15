@@ -8,7 +8,7 @@ else()
     add_compile_options(-Wall -Wextra -pedantic -Werror)
 endif()
 
-include_directories(../lib)
+include_directories(../utils)
 
 set(CMAKE_C_STANDARD 11)
 

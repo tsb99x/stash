@@ -1,9 +1,0 @@
-IndentWidth: 4
-ColumnLimit: 80
-
-BreakBeforeBraces: Custom
-BraceWrapping:
-    AfterFunction: 'true'
-
-SortIncludes: true
-AlwaysBreakTemplateDeclarations: true

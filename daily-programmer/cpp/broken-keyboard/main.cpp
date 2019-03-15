@@ -1,20 +1,9 @@
-#include "main.h"
-
 #include <fstream>
+#include <vector>
+#include <tuple>
+#include <iostream>
 
 using namespace std;
-
-int main()
-{
-    try {
-        auto words = read_words();
-        auto inputs = get_inputs();
-        auto pairs = pair_match(words, inputs);
-        output(pairs, cout);
-    } catch (const exception &e) {
-        cerr << e.what();
-    }
-}
 
 vector<string> read_words()
 {
@@ -51,17 +40,19 @@ vector<string> get_inputs()
     return res;
 }
 
-vector<tuple<const string &, const string *>> pair_match(const vector<string> &words, const vector<string> &inputs)
+bool includes_every_char(const string &word,
+                         const string &input)
 {
-    vector<tuple<const string &, const string *>> res;
-    for (const string &input : inputs) {
-        auto match = find_longest_match(words, input);
-        res.emplace_back(input, match);
+    for (const char &ch : word) {
+        if (input.find(ch) == string::npos) {
+            return false;
+        }
     }
-    return res;
+    return true;
 }
 
-const string *find_longest_match(const vector<string> &words, const string &input)
+const string *find_longest_match(const vector<string> &words,
+                                 const string &input)
 {
     const string *best = nullptr;
     for (const string &word : words) {
@@ -76,17 +67,20 @@ const string *find_longest_match(const vector<string> &words, const string &inpu
     return best;
 }
 
-bool includes_every_char(const string &word, const string &input)
+vector<tuple<const string &, const string *>>
+pair_match(const vector<string> &words,
+           const vector<string> &inputs)
 {
-    for (const char &ch : word) {
-        if (input.find(ch) == string::npos) {
-            return false;
-        }
+    vector<tuple<const string &, const string *>> res;
+    for (const string &input : inputs) {
+        auto match = find_longest_match(words, input);
+        res.emplace_back(input, match);
     }
-    return true;
+    return res;
 }
 
-void output(const vector<tuple<const string &, const string *>> &pairs, ostream &stream)
+void output(const vector<tuple<const string &, const string *>> &pairs,
+            ostream &stream)
 {
     for (auto &elem : pairs) {
         stream << get<0>(elem) << " : ";
@@ -96,5 +90,19 @@ void output(const vector<tuple<const string &, const string *>> &pairs, ostream 
             stream << *get<1>(elem);
         }
         stream << endl;
+    }
+}
+
+int main()
+{
+    try {
+
+        auto words = read_words();
+        auto inputs = get_inputs();
+        auto pairs = pair_match(words, inputs);
+        output(pairs, cout);
+
+    } catch (const exception &e) {
+        cerr << e.what();
     }
 }
