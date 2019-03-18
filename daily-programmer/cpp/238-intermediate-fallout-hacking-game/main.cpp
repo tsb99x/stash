@@ -1,27 +1,24 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <ctime>
 #include <algorithm>
 #include <random>
 #include <chrono>
 
 using namespace std;
+using namespace chrono;
 
 vector<string> read_words()
 {
     vector<string> res;
 
-    ifstream input;
-    input.open("enable1.txt");
-
+    ifstream input("enable1.txt");
     if (!input.is_open())
         throw runtime_error("Failed to open 'enable1.txt' file");
 
     string str;
     while (getline(input, str))
         res.push_back(str);
-    input.close();
 
     return res;
 }
@@ -29,17 +26,22 @@ vector<string> read_words()
 int get_difficulty()
 {
     int res;
-    cout << "Difficulty (1-5)? ";
+
+    cout << "Difficulty (0-4)? ";
     cin >> res;
+
+    if (res < 0 || res > 4)
+        throw runtime_error("Input difficulty must be in 0-4 range");
+
     return res;
 }
 
-struct diff_range {
+struct range {
     int from;
     int to;
 };
 
-diff_range diff_map[] = {
+range diff_map[] = {
         {4,  5},
         {6,  8},
         {9,  10},
@@ -47,13 +49,16 @@ diff_range diff_map[] = {
         {13, 15}
 };
 
-int get_rand_from_range(const diff_range &range)
+int get_rand_from_range(const range &range,
+                        default_random_engine &dre)
 {
-    return rand() % (range.to - range.from + 1) + range.from;
+    uniform_int_distribution range_dist(range.from, range.to);
+    return range_dist(dre);
 }
 
 vector<string> filter_words(const vector<string> &dict,
-                            const int length)
+                            const int length,
+                            default_random_engine &dre)
 {
     vector<string> res;
 
@@ -61,8 +66,7 @@ vector<string> filter_words(const vector<string> &dict,
         if (word.length() == length)
             res.push_back(word);
 
-    int64_t seed = chrono::system_clock::now().time_since_epoch().count();
-    shuffle(res.begin(), res.end(), default_random_engine(seed));
+    shuffle(res.begin(), res.end(), dre);
 
     return res;
 }
@@ -72,7 +76,7 @@ vector<string> select_words(const vector<string> &words,
 {
     vector<string> res;
 
-    for (int i = 0; i < count && words.size() > 0; i++)
+    for (int i = 0; i < count && !words.empty(); i++)
         res.push_back(words[i]);
 
     return res;
@@ -106,29 +110,37 @@ int guess(const int guesses_left,
     return guesses_left - 1;
 }
 
+void try_guess(const string &word,
+               int guesses_left)
+{
+    while (guesses_left > 0)
+        guesses_left = guess(guesses_left, word);
+
+    if (guesses_left == -1)
+        cout << "You win!" << endl;
+    else
+        cout << "You lose!" << endl;
+}
+
 int main()
 {
     try {
 
-        srand(time(NULL));
+        time_point tp = system_clock::now();
+        default_random_engine gen(tp.time_since_epoch().count());
 
         vector<string> dict = read_words();
         int diff_val = get_difficulty();
-        int magic_num = get_rand_from_range(diff_map[diff_val]);
-        vector<string> filtered = filter_words(dict, magic_num);
-        vector<string> words = select_words(filtered, magic_num);
 
+        int word_length = get_rand_from_range(diff_map[diff_val], gen);
+        vector<string> filtered = filter_words(dict, word_length, gen);
+
+        int word_count = get_rand_from_range(diff_map[diff_val], gen);
+        vector<string> words = select_words(filtered, word_count);
         output_words(words);
-        string word = words[get_rand_from_range({0, magic_num})];
 
-        int guesses_left = 4;
-        while (guesses_left > 0)
-            guesses_left = guess(guesses_left, word);
-
-        if (guesses_left == -1)
-            cout << "You win!" << endl;
-        else
-            cout << "You lose!" << endl;
+        string word = words[get_rand_from_range({0, word_count}, gen)];
+        try_guess(word, 4);
 
     } catch (const exception &e) {
 
