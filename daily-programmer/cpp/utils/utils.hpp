@@ -4,14 +4,16 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <iostream>
+#include <fstream>
 
-std::vector<std::string> args(const int argc,
+std::vector<std::string> args(const unsigned argc,
                               const char *argv[])
 {
     std::vector<std::string> res;
     res.reserve(argc);
 
-    for (int i = 0; i < argc; i++)
+    for (unsigned i = 0; i < argc; i++)
         res.emplace_back(argv[i]);
 
     return res;
@@ -33,6 +35,22 @@ std::string join(const T &cont,
         os << sep << *it++;
 
     return os.str();
+}
+
+std::vector<std::string> read_file(const char *const filename)
+{
+    std::vector<std::string> res;
+
+    std::ifstream input(filename);
+    if (!input.is_open())
+        throw std::runtime_error(
+                std::string("Failed to open '") + filename + "' file");
+
+    std::string str;
+    while (std::getline(input, str))
+        res.push_back(str);
+
+    return res;
 }
 
 #endif

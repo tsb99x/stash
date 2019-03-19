@@ -1,27 +1,11 @@
-#include <iostream>
-#include <vector>
-#include <fstream>
+#include "utils.hpp"
+
 #include <algorithm>
 #include <random>
 #include <chrono>
 
 using namespace std;
 using namespace chrono;
-
-vector<string> read_words()
-{
-    vector<string> res;
-
-    ifstream input("enable1.txt");
-    if (!input.is_open())
-        throw runtime_error("Failed to open 'enable1.txt' file");
-
-    string str;
-    while (getline(input, str))
-        res.push_back(str);
-
-    return res;
-}
 
 int get_difficulty()
 {
@@ -129,7 +113,7 @@ int main()
         time_point tp = system_clock::now();
         default_random_engine gen(tp.time_since_epoch().count());
 
-        vector<string> dict = read_words();
+        vector<string> dict = read_file("enable1.txt");
         int diff_val = get_difficulty();
 
         int word_length = get_rand_from_range(diff_map[diff_val], gen);
