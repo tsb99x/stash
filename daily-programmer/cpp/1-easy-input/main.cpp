@@ -1,18 +1,6 @@
-#include <iostream>
-#include <fstream>
+#include "utils.hpp"
 
 using namespace std;
-
-template<typename T>
-T prompt(const string &invite)
-{
-    T res;
-
-    cout << invite;
-    cin >> res;
-
-    return res;
-}
 
 int main()
 {

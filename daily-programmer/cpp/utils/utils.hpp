@@ -37,7 +37,7 @@ std::string join(const T &cont,
     return os.str();
 }
 
-std::vector<std::string> read_file(const char *const filename)
+std::vector<std::string> read_file(const std::string &filename)
 {
     std::vector<std::string> res;
 
@@ -49,6 +49,17 @@ std::vector<std::string> read_file(const char *const filename)
     std::string str;
     while (std::getline(input, str))
         res.push_back(str);
+
+    return res;
+}
+
+template<typename T>
+T prompt(const std::string &invite)
+{
+    T res;
+
+    std::cout << invite;
+    std::cin >> res;
 
     return res;
 }
