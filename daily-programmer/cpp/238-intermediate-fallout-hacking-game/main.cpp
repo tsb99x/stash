@@ -6,6 +6,7 @@
 
 using namespace std;
 using namespace chrono;
+using namespace utils;
 
 int get_difficulty()
 {

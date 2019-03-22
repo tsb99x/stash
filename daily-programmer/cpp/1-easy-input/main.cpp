@@ -1,16 +1,17 @@
 #include "utils.hpp"
 
 using namespace std;
+using namespace utils;
 
 int main()
 {
-    auto name = prompt<string>("Input name > ");
-    auto age = prompt<string>("Input age > ");
-    auto username = prompt<string>("Input username > ");
+    string name = prompt("Input name > ");
+    string age = prompt("Input age > ");
+    string username = prompt("Input username > ");
 
     cout << "your name is (" << name
          << "), you are (" << age
-         << ") years old, and your username is (" << username << ")";
+         << ") years old, and your username is (" << username << ")" << endl;
 
     ofstream os("log.txt", ios_base::app);
     if (!os.is_open()) {

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
-project(fallout_hacking_game VERSION 0.1.0)
+project(238_intermediate_fallout_hacking_game VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 17)
 

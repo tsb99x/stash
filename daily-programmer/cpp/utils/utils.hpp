@@ -7,6 +7,12 @@
 #include <iostream>
 #include <fstream>
 
+namespace utils {
+
+/**
+ * Convert standard C args to more object-oriented C++ ones.
+ */
+
 std::vector<std::string> args(const unsigned argc,
                               const char *argv[])
 {
@@ -18,6 +24,10 @@ std::vector<std::string> args(const unsigned argc,
 
     return res;
 }
+
+/**
+ * Join any iteratable container elements to string.
+ */
 
 template<typename T>
 std::string join(const T &cont,
@@ -37,14 +47,18 @@ std::string join(const T &cont,
     return os.str();
 }
 
-std::vector<std::string> read_file(const std::string &filename)
+/**
+ * Read file line-by-line to vector of lines (strings).
+ */
+
+std::vector<std::string> read_file(const std::string &filepath)
 {
     std::vector<std::string> res;
 
-    std::ifstream input(filename);
+    std::ifstream input(filepath);
     if (!input.is_open())
         throw std::runtime_error(
-                std::string("Failed to open '") + filename + "' file");
+                std::string("Failed to open '") + filepath + "' file");
 
     std::string str;
     while (std::getline(input, str))
@@ -53,15 +67,43 @@ std::vector<std::string> read_file(const std::string &filename)
     return res;
 }
 
-template<typename T>
-T prompt(const std::string &invite)
+/**
+ * Standard input procedure.
+ * Invites user to input data.
+ * Returns a full line of input.
+ */
+
+std::string prompt(const std::string &invite)
 {
-    T res;
+    std::string res;
 
     std::cout << invite;
-    std::cin >> res;
+    std::getline(std::cin, res);
 
     return res;
+}
+
+/**
+ * Insert newline into output.
+ * Use like std::cout << newl;
+ * Prefer this instead of std::endl to prevent flush part.
+ */
+
+std::ostream &newl(std::ostream &os)
+{
+    return os << "\n";
+}
+
+/**
+ * Insert tab into output.
+ * Use like std::cout << tab;
+ */
+
+std::ostream &tab(std::ostream &os)
+{
+    return os << "\t";
+}
+
 }
 
 #endif
