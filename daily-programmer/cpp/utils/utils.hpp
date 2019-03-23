@@ -13,8 +13,8 @@ namespace utils {
  * Convert standard C args to more object-oriented C++ ones.
  */
 
-std::vector<std::string> args(const unsigned argc,
-                              const char *argv[])
+inline std::vector<std::string> args(const unsigned argc,
+                                     const char *argv[])
 {
     std::vector<std::string> res;
     res.reserve(argc);
@@ -30,8 +30,8 @@ std::vector<std::string> args(const unsigned argc,
  */
 
 template<typename T>
-std::string join(const T &cont,
-                 const std::string &sep)
+inline std::string join(const T &cont,
+                        const std::string &sep)
 {
     std::ostringstream os;
 
@@ -51,7 +51,7 @@ std::string join(const T &cont,
  * Read file line-by-line to vector of lines (strings).
  */
 
-std::vector<std::string> read_file(const std::string &filepath)
+inline std::vector<std::string> read_file(const std::string &filepath)
 {
     std::vector<std::string> res;
 
@@ -73,7 +73,7 @@ std::vector<std::string> read_file(const std::string &filepath)
  * Returns a full line of input.
  */
 
-std::string prompt(const std::string &invite)
+inline std::string prompt(const std::string &invite)
 {
     std::string res;
 
@@ -89,7 +89,7 @@ std::string prompt(const std::string &invite)
  * Prefer this instead of std::endl to prevent flush part.
  */
 
-std::ostream &newl(std::ostream &os)
+inline std::ostream &newl(std::ostream &os)
 {
     return os << "\n";
 }
@@ -99,7 +99,7 @@ std::ostream &newl(std::ostream &os)
  * Use like std::cout << tab;
  */
 
-std::ostream &tab(std::ostream &os)
+inline std::ostream &tab(std::ostream &os)
 {
     return os << "\t";
 }
