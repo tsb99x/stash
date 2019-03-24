@@ -5,19 +5,6 @@
 using namespace std;
 using namespace utils;
 
-optional<int> convert(const string &orig)
-{
-    int res;
-
-    try {
-        res = stoi(orig);
-    } catch (const exception &ex) {
-        return nullopt;
-    }
-
-    return res;
-}
-
 string fn_help(vector<event> &events,
                const vector<string> &args)
 {
@@ -62,7 +49,7 @@ string fn_list(vector<event> &events,
 string fn_create(vector<event> &events,
                  const vector<string> &args)
 {
-    auto opt_hour = convert(args[1]);
+    auto opt_hour = convert<int>(args[1]);
     if (!opt_hour.has_value())
         return "hour argument must be an int";
     int hour = opt_hour.value();
@@ -78,7 +65,7 @@ string fn_create(vector<event> &events,
 string fn_update(vector<event> &events,
                  const vector<string> &args)
 {
-    auto opt_idx = convert(args[1]);
+    auto opt_idx = convert<int>(args[1]);
     if (!opt_idx.has_value())
         return "idx argument must be an int";
     int idx = opt_idx.value();
@@ -93,7 +80,7 @@ string fn_update(vector<event> &events,
 
     string hour_str = prompt("input hour ("s + to_string(evt.hour) + ") > ");
     if (!hour_str.empty()) {
-        auto opt_hour = convert(args[1]);
+        auto opt_hour = convert<int>(args[1]);
         if (!opt_hour.has_value())
             return "hour argument must be an int";
         int hour = opt_hour.value();
@@ -119,7 +106,7 @@ string fn_update(vector<event> &events,
 string fn_delete(vector<event> &events,
                  const vector<string> &args)
 {
-    auto opt_idx = convert(args[1]);
+    auto opt_idx = convert<int>(args[1]);
     if (!opt_idx.has_value())
         return "idx argument must be an int";
     int idx = opt_idx.value();

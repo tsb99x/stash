@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <optional>
 
 namespace utils {
 
@@ -102,6 +103,49 @@ inline std::ostream &newl(std::ostream &os)
 inline std::ostream &tab(std::ostream &os)
 {
     return os << "\t";
+}
+
+/**
+ * Generic conversion function from string to T.
+ */
+
+template<typename T>
+std::optional<T> convert(const std::string &orig);
+
+/**
+ * Does convert std::string -> int.
+ */
+
+template<>
+inline std::optional<int> convert(const std::string &orig)
+{
+    int res;
+
+    try {
+        res = stoi(orig);
+    } catch (const std::exception &ex) {
+        return std::nullopt;
+    }
+
+    return res;
+}
+
+/**
+ * Does convert std::string -> float.
+ */
+
+template<>
+inline std::optional<float> convert(const std::string &orig)
+{
+    float res;
+
+    try {
+        res = stof(orig);
+    } catch (const std::exception &ex) {
+        return std::nullopt;
+    }
+
+    return res;
 }
 
 }
